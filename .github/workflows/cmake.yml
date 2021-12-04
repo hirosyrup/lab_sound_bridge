@@ -20,6 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
+    - name: apt-get install libasound2-dev
+      run: apt-get install libasound2-dev -y
+      
     - name: submodule update
       run: git submodule update --init --recursive
     
