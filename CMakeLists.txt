@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 project(LabSoundBridge)
-set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC" )
-set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC" )
+
 SET(BUILD_EXAMPLE OFF CACHE BOOL "Build example application")
 
 set(LABSOUND_BRIDGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
@@ -9,6 +8,11 @@ set(LABSOUND_BRIDGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 add_subdirectory(LabSound EXCLUDE_FROM_ALL)
 
 file(GLOB dart_api_h      "${LABSOUND_BRIDGE_ROOT}/bridge/dart_api/*")
+
+if(LINUX) 
+    set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC" )
+    set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC" )
+endif()
 
 add_library(LabSoundBridge SHARED
     ./bridge/LabSoundBridge.cpp
