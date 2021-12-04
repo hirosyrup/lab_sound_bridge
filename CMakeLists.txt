@@ -1,14 +1,18 @@
 cmake_minimum_required(VERSION 3.13)
 project(LabSoundBridge)
 
+if (WIN32)
+elseif (APPLE)
+elseif (ANDROID)
+else()
+    set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC" )
+    set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC" )
+endif()
+
 SET(BUILD_EXAMPLE OFF CACHE BOOL "Build example application")
 
 set(LABSOUND_BRIDGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
-if(LINUX) 
-    set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC" )
-    set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC" )
-endif()
 
 add_subdirectory(LabSound EXCLUDE_FROM_ALL)
 
