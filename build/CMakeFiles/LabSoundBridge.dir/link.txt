@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC  -fPIC -O3 -DNDEBUG -shared -Wl,-soname,libLabSoundBridge.so -o libLabSoundBridge.so CMakeFiles/LabSoundBridge.dir/bridge/LabSoundBridge.cpp.o CMakeFiles/LabSoundBridge.dir/bridge/dart_api/dart_api_dl.c.o  bin/libLabSound.a -lpthread -lasound bin/liblibnyquist.a bin/liblibwavpack.a LabSound/third_party/libsamplerate/src/libsamplerate.a -lm -lm -ldl 

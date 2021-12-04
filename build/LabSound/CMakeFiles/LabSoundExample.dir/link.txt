@@ -1,1 +1,0 @@
-/usr/bin/c++   -fPIC -O3 -DNDEBUG CMakeFiles/LabSoundExample.dir/examples/src/ExamplesMain.cpp.o -o bin/LabSoundExample  -lpthread -lasound ../bin/libLabSound.a -lpthread -lasound ../bin/liblibnyquist.a ../bin/liblibwavpack.a third_party/libsamplerate/src/libsamplerate.a -lm -lm -ldl 
