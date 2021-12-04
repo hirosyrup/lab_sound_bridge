@@ -16,10 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: recursive
     
-    - name: apt-get install libasound2-dev
-      run: sudo apt-get install libasound2-dev -y
-      
     - name: submodule update
       run: git submodule update --init --recursive
     
@@ -42,9 +41,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
-    - name: submodule update
-      run: git submodule update --init --recursive
+      with:
+        submodules: recursive
     
     - name: mkdir build
       run: mkdir build
@@ -54,7 +52,7 @@ jobs:
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-      
+
     - uses: actions/upload-artifact@v2
       with:
         name: windows-amd64
