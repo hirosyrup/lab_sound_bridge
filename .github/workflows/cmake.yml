@@ -58,7 +58,7 @@ jobs:
         name: windows-amd64
         path: ${{github.workspace}}/build/Release/LabSoundBridge.dll
 
-  android-amd64:
+  android-arm:
     runs-on: ubuntu-latest
 
     steps:
@@ -91,3 +91,6 @@ jobs:
       with:
         name: android-arm
         path: ${{github.workspace}}/build
+
+
+
