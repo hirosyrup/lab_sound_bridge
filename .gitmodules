@@ -1,0 +1,4 @@
+[submodule "LabSound"]
+	path = LabSound
+	url = https://github.com/LabSound/LabSound.git
+	branch = main
