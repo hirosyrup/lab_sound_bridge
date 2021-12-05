@@ -74,12 +74,6 @@ jobs:
     - name: mkdir build
       run: mkdir build
 
-    - name: Build armeabi
-      run: cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/build/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-      env:
-        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-        ANDROID_ABI: armeabi
-    
     - name: Build armeabi-v7a
       run: cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/build/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
       env:
