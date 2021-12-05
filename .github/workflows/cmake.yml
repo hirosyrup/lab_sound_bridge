@@ -75,25 +75,25 @@ jobs:
       run: mkdir build
 
     - name: Build armeabi-v7a
-      run: cmake clean -B ${{github.workspace}}/build && cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/build/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build-$ANDROID_ABI -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build-$ANDROID_ABI --config ${{env.BUILD_TYPE}}
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
         ANDROID_ABI: armeabi-v7a
 
     - name: Build arm64-v8a
-      run: cmake clean -B ${{github.workspace}}/build && cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/build/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build-$ANDROID_ABI -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build-$ANDROID_ABI --config ${{env.BUILD_TYPE}}
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
         ANDROID_ABI: arm64-v8a
 
     - name: Build x86
-      run: cmake clean -B ${{github.workspace}}/build && cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/build/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build-$ANDROID_ABI -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build-$ANDROID_ABI --config ${{env.BUILD_TYPE}}
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
         ANDROID_ABI: x86
 
     - name: Build x86_64
-      run: cmake clean -B ${{github.workspace}}/build && cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/build/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build-$ANDROID_ABI -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build-$ANDROID_ABI --config ${{env.BUILD_TYPE}}
       env:
         ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
         ANDROID_ABI: x86_64
@@ -101,6 +101,6 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: android
-        path: ${{github.workspace}}/build/lib
+        path: ${{github.workspace}}/lib
 
 
