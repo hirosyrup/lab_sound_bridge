@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 project(LabSoundBridge)
 
+set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -s")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+
 if (WIN32)
 elseif (APPLE)
 elseif (ANDROID)
@@ -8,6 +11,7 @@ else()
     set( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -fPIC" )
     set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -fPIC" )
 endif()
+
 
 SET(BUILD_EXAMPLE OFF CACHE BOOL "Build example application")
 
