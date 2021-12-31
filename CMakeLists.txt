@@ -56,7 +56,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if (APPLE)
-   if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
+    if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
        set(DARWIN_LIBS
            "-framework AudioToolbox"
            "-framework Accelerate"
@@ -85,12 +85,9 @@ add_library(LabSoundBridge SHARED
     ${dart_api_h}
 )
 
-target_link_libraries(LabSoundBridge LabSound ${PLATFORM_LIBS})
+target_link_libraries(LabSoundBridge LabSound ${DARWIN_LIBS})
 
-set_target_properties(LabSoundBridge
-    PROPERTIES
-    OUTPUT_NAME_DEBUG LabSoundBridge_d
-)
+
 
 if (APPLE)
     set_target_properties(LabSoundBridge PROPERTIES
@@ -105,6 +102,11 @@ if (APPLE)
     #     PROPERTY MACOSX_PACKAGE_LOCATION Headers/LabSound/core)
     # set_property(SOURCE ${labsnd_extended_h}
     #     PROPERTY MACOSX_PACKAGE_LOCATION Headers/LabSound/extended)
+else()
+    set_target_properties(LabSoundBridge
+        PROPERTIES
+        OUTPUT_NAME_DEBUG LabSoundBridge_d
+    )
 endif()
 
 install(TARGETS LabSoundBridge
