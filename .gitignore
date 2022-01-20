@@ -33,3 +33,4 @@ build
 *.out
 *.app
 .DS_Store
+.vscode
