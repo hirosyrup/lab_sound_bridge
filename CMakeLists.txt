@@ -87,13 +87,12 @@ add_library(LabSoundBridge SHARED
 
 target_link_libraries(LabSoundBridge LabSound ${DARWIN_LIBS})
 
-
-
 if (APPLE)
     set_target_properties(LabSoundBridge PROPERTIES
         FRAMEWORK TRUE
         FRAMEWORK_VERSION A
         MACOSX_FRAMEWORK_IDENTIFIER com.Lab.LabSound.bridge
+        MACOSX_DEPLOYMENT_TARGET 10.11
         VERSION 0.13.0
         SOVERSION 1.0.0
         # PUBLIC_HEADER "${labsnd_core_h} ${labsnd_extended_h}"
