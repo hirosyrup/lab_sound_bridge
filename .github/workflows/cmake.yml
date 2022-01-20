@@ -11,83 +11,83 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  # build-linux-amd64:
-  #   runs-on: ubuntu-latest
+  build-linux-amd64:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #     with:
-  #       submodules: recursive
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
         
-  #   - name: apt-get install libasound2-dev
-  #     run: sudo apt-get install libasound2-dev -y
+    - name: apt-get install libasound2-dev
+      run: sudo apt-get install libasound2-dev -y
 
-  #   - name: mkdir build
-  #     run: mkdir build
+    - name: mkdir build
+      run: mkdir build
 
-  #   - name: Configure CMake
-  #     run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DLABSOUND_ASOUND=1
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DLABSOUND_ASOUND=1
 
-  #   - name: Build
-  #     run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-  #   - uses: actions/upload-artifact@v2
-  #     with:
-  #       name: linux-amd64
-  #       path: ${{github.workspace}}/build/libLabSoundBridge.so
+    - uses: actions/upload-artifact@v2
+      with:
+        name: linux-amd64
+        path: ${{github.workspace}}/build/libLabSoundBridge.so
 
-  # build-windows-amd64:
-  #   runs-on: windows-latest
+  build-windows-amd64:
+    runs-on: windows-latest
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #     with:
-  #       submodules: recursive
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
     
-  #   - name: mkdir build
-  #     run: mkdir build
+    - name: mkdir build
+      run: mkdir build
 
-  #   - name: Configure CMake
-  #     run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-  #   - name: Build
-  #     run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-  #   - uses: actions/upload-artifact@v2
-  #     with:
-  #       name: windows-amd64
-  #       path: ${{github.workspace}}/build/Release/LabSoundBridge.dll
+    - uses: actions/upload-artifact@v2
+      with:
+        name: windows-amd64
+        path: ${{github.workspace}}/build/Release/LabSoundBridge.dll
 
-  # android:
-  #   runs-on: ubuntu-latest
+  android:
+    runs-on: ubuntu-latest
 
-  #   strategy:
-  #     matrix:
-  #       abi: ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
+    strategy:
+      matrix:
+        abi: ['armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64']
 
-  #   steps:
-  #   - uses: actions/checkout@v2
-  #     with:
-  #       submodules: recursive
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
 
-  #   - uses: nttld/setup-ndk@v1
-  #     id: setup-ndk
-  #     with:
-  #       ndk-version: r21e
+    - uses: nttld/setup-ndk@v1
+      id: setup-ndk
+      with:
+        ndk-version: r21e
     
-  #   - name: mkdir build
-  #     run: mkdir build
+    - name: mkdir build
+      run: mkdir build
 
-  #   - name: Build ${{ matrix.abi }}
-  #     run: cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
-  #     env:
-  #       ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-  #       ANDROID_ABI: ${{ matrix.abi }}
+    - name: Build ${{ matrix.abi }}
+      run: cmake -B ${{github.workspace}}/build -DANDROID_ABI=$ANDROID_ABI -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DANDROID_PLATFORM=android-16 -DANDROID_NDK=$ANDROID_NDK_HOME -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake -DANDROID_TOOLCHAIN=clang -DCMAKE_SYSTEM_NAME=Android -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=${{github.workspace}}/lib/$ANDROID_ABI/ && cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      env:
+        ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+        ANDROID_ABI: ${{ matrix.abi }}
 
-  #   - uses: actions/upload-artifact@v2
-  #     with:
-  #       name: android-${{ matrix.abi }}
-  #       path: ${{github.workspace}}/lib
+    - uses: actions/upload-artifact@v2
+      with:
+        name: android-${{ matrix.abi }}
+        path: ${{github.workspace}}/lib
 
   build-macos:
     runs-on: macos-latest
