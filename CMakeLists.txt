@@ -59,9 +59,10 @@ if (APPLE)
     if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
        set(DARWIN_LIBS
            "-framework Foundation"
-           "-framework AVFAudio"
+           "-framework AVFoundation"
            "-framework AudioToolbox"
-           "-framework Accelerate")
+           "-framework Accelerate"
+           )
     else()
         set(DARWIN_LIBS
             "-framework AudioToolbox"
