@@ -113,7 +113,6 @@ jobs:
         MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
         MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
       run: |
-        rm -f build.keychain
         echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
         security create-keychain -p abc123 build.keychain
         security default-keychain -s build.keychain
@@ -125,6 +124,42 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: macos
+        name: macos-x86_64
         path: ${{github.workspace}}/build/lib
+
+
+  build-ios:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: mkdir build
+      run: mkdir build
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -G "Xcode" -DCMAKE_TOOLCHAIN_FILE=../cmake/ios-toolchain.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Codesign executable
+      env: 
+        MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+        MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+      run: |
+        echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+        security create-keychain -p abc123 build.keychain
+        security default-keychain -s build.keychain
+        security unlock-keychain -p abc123 build.keychain
+        security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+        security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k abc123 build.keychain
+        codesignIdentity=`security find-identity -p codesigning -v | grep -Eo "[0-9A-F]{40}" | head -n 1`
+        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework -v
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ios
+        path: ${{github.workspace}}/build/Release-iphoneos
 

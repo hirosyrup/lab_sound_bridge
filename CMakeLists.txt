@@ -58,21 +58,21 @@ endif()
 if (APPLE)
     if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
        set(DARWIN_LIBS
+           "-framework Foundation"
+           "-framework AVFAudio"
            "-framework AudioToolbox"
-           "-framework Accelerate"
-           "-framework CoreAudio")
-   else()
+           "-framework Accelerate")
+    else()
         set(DARWIN_LIBS
             "-framework AudioToolbox"
             "-framework AudioUnit"
             "-framework Accelerate"
             "-framework CoreAudio"
             "-framework Cocoa")
-   endif()
+    endif()
 endif()
 
 SET(BUILD_EXAMPLE OFF CACHE BOOL "Build example application")
-SET(MA_NO_AAUDIO OFF CACHE BOOL "Disables the AAudio backend.")
 
 set(LABSOUND_BRIDGE_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
