@@ -132,13 +132,25 @@ jobs:
       with:
         submodules: recursive
     - name: mkdir build
-      run: mkdir build
+      run: mkdir build && mkdir build-simulator
 
-    - name: Configure CMake
-      run: cmake -B ${{github.workspace}}/build -G "Xcode" -DCMAKE_TOOLCHAIN_FILE=../cmake/ios-toolchain.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Configure CMake PLATFORM=OS64
+      run: cmake -B ${{github.workspace}}/build -G "Xcode" -DPLATFORM=OS64 -DCMAKE_TOOLCHAIN_FILE=../cmake/ios-toolchain.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
-    - name: Build
+    - name: Build PLATFORM=OS64
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Configure CMake PLATFORM=SIMULATOR64
+      run: cmake -B ${{github.workspace}}/build-simulator -G "Xcode" -DPLATFORM=SIMULATOR64 -DCMAKE_TOOLCHAIN_FILE=../cmake/ios-toolchain.cmake -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build PLATFORM=SIMULATOR64
+      run: cmake --build ${{github.workspace}}/build-simulator --config ${{env.BUILD_TYPE}}
+
+    - name: merge
+      run: |
+        mkdir -p ${{github.workspace}}/products
+        cp -r ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework ${{github.workspace}}/products
+        lipo -create -output ${{github.workspace}}/products/LabSoundBridge.framework/LabSoundBridge ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework/LabSoundBridge ${{github.workspace}}/build-simulator/Release-iphonesimulator/LabSoundBridge.framework/LabSoundBridge
 
     - name: Codesign executable
       env: 
@@ -152,10 +164,22 @@ jobs:
         security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k abc123 build.keychain
         codesignIdentity=`security find-identity -p codesigning -v | grep -Eo "[0-9A-F]{40}" | head -n 1`
+        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/products/LabSoundBridge.framework -v
         /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework -v
+        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build-simulator/Release-iphonesimulator/LabSoundBridge.framework -v
 
     - uses: actions/upload-artifact@v2
       with:
         name: ios
+        path: ${{github.workspace}}/products
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ios-arm64
         path: ${{github.workspace}}/build/Release-iphoneos
+        
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ios-x86_64
+        path: ${{github.workspace}}/build-simulator/Release-iphonesimulator/
 

@@ -56,7 +56,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 if (APPLE)
-    if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*")
+    if(CMAKE_OSX_SYSROOT MATCHES ".*iphoneos.*" OR CMAKE_OSX_SYSROOT MATCHES ".*iphonesimulator.*")
        set(DARWIN_LIBS
            "-framework Foundation"
            "-framework AVFoundation"
