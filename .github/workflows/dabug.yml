@@ -51,7 +51,7 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: windows-amd64
-        path: ${{github.workspace}}/build/Release/LabSoundBridge.dll
+        path: ${{github.workspace}}/build/${{env.BUILD_TYPE}}/LabSoundBridge.dll
 
   android:
     runs-on: ubuntu-latest
@@ -147,8 +147,8 @@ jobs:
     - name: Merge framework
       run: |
         mkdir -p ${{github.workspace}}/products
-        cp -r ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework ${{github.workspace}}/products
-        lipo -create -output ${{github.workspace}}/products/LabSoundBridge.framework/LabSoundBridge ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework/LabSoundBridge ${{github.workspace}}/build-simulator/Release-iphonesimulator/LabSoundBridge.framework/LabSoundBridge
+        cp -r ${{github.workspace}}/build/${{env.BUILD_TYPE}}-iphoneos/LabSoundBridge.framework ${{github.workspace}}/products
+        lipo -create -output ${{github.workspace}}/products/LabSoundBridge.framework/LabSoundBridge ${{github.workspace}}/build/${{env.BUILD_TYPE}}-iphoneos/LabSoundBridge.framework/LabSoundBridge ${{github.workspace}}/build-simulator/${{env.BUILD_TYPE}}-iphonesimulator/LabSoundBridge.framework/LabSoundBridge
 
     - name: Codesign executable
       env: 
@@ -163,8 +163,8 @@ jobs:
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k abc123 build.keychain
         codesignIdentity=`security find-identity -p codesigning -v | grep -Eo "[0-9A-F]{40}" | head -n 1`
         /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/products/LabSoundBridge.framework -v
-        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build/Release-iphoneos/LabSoundBridge.framework -v
-        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build-simulator/Release-iphonesimulator/LabSoundBridge.framework -v
+        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build/${{env.BUILD_TYPE}}-iphoneos/LabSoundBridge.framework -v
+        /usr/bin/codesign --force -s $codesignIdentity ${{github.workspace}}/build-simulator/${{env.BUILD_TYPE}}-iphonesimulator/LabSoundBridge.framework -v
 
     - uses: actions/upload-artifact@v2
       with:
@@ -174,9 +174,9 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: ios-arm64
-        path: ${{github.workspace}}/build/Release-iphoneos
+        path: ${{github.workspace}}/build/${{env.BUILD_TYPE}}-iphoneos
         
     - uses: actions/upload-artifact@v2
       with:
         name: ios-x86_64
-        path: ${{github.workspace}}/build-simulator/Release-iphonesimulator/
+        path: ${{github.workspace}}/build-simulator/${{env.BUILD_TYPE}}-iphonesimulator/
