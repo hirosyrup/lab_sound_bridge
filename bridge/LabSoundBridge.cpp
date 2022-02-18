@@ -55,7 +55,7 @@ DART_EXPORT AudioDeviceInfoList labSound_MakeAudioDeviceList() {
 	{
 		devices[i].index = audioDevices[i].index;
 		devices[i].identifier = const_cast<char*>(returnString(audioDevices[i].identifier));
-        devices[i].identifier_len = sizeof(devices[i].identifier);
+        devices[i].identifier_len = strlen(devices[i].identifier);
 		devices[i].num_output_channels = audioDevices[i].num_output_channels;
 		devices[i].num_input_channels = audioDevices[i].num_input_channels;
 		devices[i].nominal_samplerate = audioDevices[i].nominal_samplerate;
