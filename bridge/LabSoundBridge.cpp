@@ -1,5 +1,5 @@
 #define DART_SHARED_LIB
-
+#define MA_NO_AAUDIO
 #include "LabSound/LabSound.h"
 #include <thread>
 
