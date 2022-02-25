@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13)
 project(LabSoundBridge)
-
+add_definitions(-DMA_NO_AAUDIO)
 if (WIN32)
     # target_compile_options(${proj} PRIVATE /Zi)
     # target_compile_definitions(${proj} PRIVATE __WINDOWS_WASAPI__=1)
