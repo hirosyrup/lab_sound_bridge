@@ -11,6 +11,11 @@ DART_EXPORT int createSfxrNode(AudioContext* context) {
 
 // todo AudioSetting: preset waveType  
 
+DART_EXPORT int SfxrNode_waveType(int nodeId) {
+    auto node = std::static_pointer_cast<SfxrNode>(getNode(nodeId));
+    return node ? keepAudioSetting(nodeId, 1, node->waveType()) : -1;
+}
+
 DART_EXPORT int SfxrNode_attackTime(int nodeId) {
     auto node = std::static_pointer_cast<SfxrNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 1, node->attackTime()) : -1;
