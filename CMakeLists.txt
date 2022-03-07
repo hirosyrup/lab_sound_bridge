@@ -103,10 +103,10 @@ if (APPLE)
     # set_property(SOURCE ${labsnd_extended_h}
     #     PROPERTY MACOSX_PACKAGE_LOCATION Headers/LabSound/extended)
 else()
-    set_target_properties(LabSoundBridge
-        PROPERTIES
-        OUTPUT_NAME_DEBUG LabSoundBridge_d
-    )
+    # set_target_properties(LabSoundBridge
+    #     PROPERTIES
+    #     OUTPUT_NAME_DEBUG LabSoundBridge_d
+    # )
 endif()
 
 install(TARGETS LabSoundBridge

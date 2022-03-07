@@ -75,6 +75,10 @@ DART_EXPORT float AudioContext_sampleRate(AudioContext* context){
     return context->sampleRate();
 }
 
+DART_EXPORT int AudioContext_listener(AudioContext* context){
+    return keepAudioListener(context->listener());
+}
+
 DART_EXPORT int AudioContext_isInitialized(AudioContext* context){
     return context->isInitialized();
 }

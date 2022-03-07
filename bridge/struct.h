@@ -4,25 +4,25 @@
 #include "stdint.h"
 #include "string.h"
 
-typedef struct CharArray
+struct CharArray
 {
 	char* string;
 	int len;
-} CharArray;
+};
 
-typedef struct FloatArray
+struct FloatArray
 {
 	float* array;
 	int len;
-} FloatArray;
+};
 
-typedef struct IntArray
+struct IntArray
 {
 	int* array;
 	int len;
-} IntArray;
+};
 
-typedef struct AudioDeviceInfoBridge
+struct AudioDeviceInfoBridge
 {
     int index;
     char*  identifier;
@@ -33,12 +33,12 @@ typedef struct AudioDeviceInfoBridge
     float nominal_samplerate;
     int is_default_output;
     int is_default_input;
-} AudioDeviceInfoBridge;
+};
 
-typedef struct AudioDeviceInfoList {
+struct AudioDeviceInfoList {
     AudioDeviceInfoBridge* audioDeviceList;
     int length;
-} AudioDeviceInfoList;
+};
 
 #endif
 

@@ -63,6 +63,9 @@ std::shared_ptr<AudioNode> getNode(int nodeId) {
 }
 
 
+
+
+
 std::map<int, std::map<int, std::shared_ptr<AudioSetting>>> audioSettingMap;
 
 std::shared_ptr<AudioSetting> getKeepAudioSetting(int nodeId, int key) {
@@ -97,5 +100,39 @@ void keepNodeRelease(int nodeId) {
     audioParams.erase(nodeId);
     audioSettingMap.erase(nodeId);
 }
+
+std::map<int,std::shared_ptr<AudioListener>> audioListenerMap;
+std::map<std::shared_ptr<AudioListener>,int> audioListenerMapReverse;
+
+int keepAudioListener(std::shared_ptr<AudioListener> listener){
+    std::map<std::shared_ptr<AudioListener>,int>::iterator ite = audioListenerMapReverse.find(listener);
+    if (ite != audioListenerMapReverse.end()) {
+        return ite->second;
+    }
+    nodeCount++;
+    audioListenerMap.insert(std::pair<int,std::shared_ptr<AudioListener>>(nodeCount, listener));
+    audioListenerMapReverse.insert(std::pair<std::shared_ptr<AudioListener>,int>(listener, nodeCount));
+    return nodeCount;
+}
+
+std::shared_ptr<AudioListener> getAudioListener(int audioListenerId) {
+    if(audioListenerId < 0) return nullptr;
+    std::map<int,std::shared_ptr<AudioListener>>::iterator ite = audioListenerMap.find(audioListenerId);
+    if (ite != audioListenerMap.end()) {
+        return ite->second;
+    }
+    return nullptr;
+}
+
+
+void keepAudioListenerRelease(int audioListenerId) {
+    std::map<int,std::shared_ptr<AudioListener>>::iterator ite = audioListenerMap.find(audioListenerId);
+    if (ite != audioListenerMap.end()) {
+        audioListenerMapReverse.erase(ite->second);
+    }
+    audioParams.erase(audioListenerId);
+    audioSettingMap.erase(audioListenerId);
+}
+
 
 #endif
