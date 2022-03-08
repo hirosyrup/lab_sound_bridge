@@ -16,41 +16,41 @@ DART_EXPORT void GranulationNode_setGrainSource(int nodeId, AudioContext* contex
     if(node && bus) node->setGrainSource(r, bus);
 }
 
-DART_EXPORT int RecorderNode_getGrainSource(int nodeId) {
+DART_EXPORT int GranulationNode_getGrainSource(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepBus(std::move(node->getGrainSource())) : -1;
 }
 
-DART_EXPORT int SampledAudioNode_grainSourceBus(int nodeId) {
+DART_EXPORT int GranulationNode_grainSourceBus(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioSetting(nodeId, 0 , node->grainSourceBus) : -1;
 }
-DART_EXPORT int SampledAudioNode_windowFunc(int nodeId) {
+DART_EXPORT int GranulationNode_windowFunc(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioSetting(nodeId, 1 , node->windowFunc) : -1;
 }
 
-DART_EXPORT int SampledAudioNode_numGrains(int nodeId) {
+DART_EXPORT int GranulationNode_numGrains(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 2 , node->numGrains) : -1;
 }
 
-DART_EXPORT int SampledAudioNode_grainDuration(int nodeId) {
+DART_EXPORT int GranulationNode_grainDuration(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 3 , node->grainDuration) : -1;
 }
 
-DART_EXPORT int SampledAudioNode_grainPositionMin(int nodeId) {
+DART_EXPORT int GranulationNode_grainPositionMin(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 4 , node->grainPositionMin) : -1;
 }
 
-DART_EXPORT int SampledAudioNode_grainPositionMax(int nodeId) {
+DART_EXPORT int GranulationNode_grainPositionMax(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 5 , node->grainPositionMax) : -1;
 }
 
-DART_EXPORT int SampledAudioNode_grainPlaybackFreq(int nodeId) {
+DART_EXPORT int GranulationNode_grainPlaybackFreq(int nodeId) {
     auto node = std::static_pointer_cast<GranulationNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 6 , node->grainPlaybackFreq) : -1;
 }
