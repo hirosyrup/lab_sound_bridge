@@ -1,6 +1,8 @@
 #include "./dart_api/dart_api.h"
 #include "LabSound/LabSound.h"
 #include "KeepNode.cpp"
+#include "AudioBus.cpp"
+
 using namespace lab;
 
 DART_EXPORT const char* AudioSetting_name(int nodeId, int settingIndex) {
@@ -88,3 +90,12 @@ DART_EXPORT void AudioSetting_setString(int nodeId, int settingIndex, char const
         setting->setString(v , notify > 0);
     }
 }
+
+DART_EXPORT void AudioSetting_setBus(int nodeId, int settingIndex, int busId, int notify) {
+    auto setting = getKeepAudioSetting(nodeId, settingIndex);
+    if(setting) {
+        auto bus = getBus(busId);
+        setting->setBus(bus.get() , notify > 0);
+    }
+}
+

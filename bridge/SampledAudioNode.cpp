@@ -2,6 +2,7 @@
 #include "LabSound/LabSound.h"
 #include "KeepNode.cpp"
 #include "Port.cpp"
+#include "AudioBus.cpp"
 using namespace lab;
 
 DART_EXPORT int createAudioSampleNode(AudioContext* context) {

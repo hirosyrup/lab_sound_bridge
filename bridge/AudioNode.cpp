@@ -59,3 +59,19 @@ DART_EXPORT int hasNode(int nodeId){
     return node ? 1 : 0;
 }
 
+DART_EXPORT double AudioNode_tailTime(int nodeId, AudioContext* context) {
+    ContextRenderLock r(context, "tailTime");
+    auto node = getNode(nodeId);
+    return node ? node->tailTime(r) : 0.0;
+}
+
+DART_EXPORT double AudioNode_latencyTime(int nodeId, AudioContext* context) {
+    ContextRenderLock r(context, "latencyTime");
+    auto node = getNode(nodeId);
+    return node ? node->latencyTime(r) : 0.0;
+}
+
+DART_EXPORT int AudioNode_isInitialized(int nodeId) {
+    auto node = getNode(nodeId);
+    return node ? node->isInitialized() : 0;
+}
