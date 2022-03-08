@@ -1,3 +1,6 @@
+#ifndef AUDIO_BUS_CPP
+#define AUDIO_BUS_CPP
+
 #include "./dart_api/dart_api.h"
 #include "LabSound/LabSound.h"
 #include "Port.cpp"
@@ -144,3 +147,4 @@ DART_EXPORT int AudioChannel_length(AudioChannel * channel) {
 DART_EXPORT const float * AudioChannel_data(AudioChannel * channel) {
     return channel->data();
 }
+#endif
