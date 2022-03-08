@@ -40,6 +40,12 @@
 
 #include "AudioHardwareInputNode.cpp"
 
+#include "ClipNode.cpp"
+#include "NullDeviceNode.cpp"
+#include "PWMNode.cpp"
+#include "GranulationNode.cpp"
+
+
 using namespace lab;
 
 DART_EXPORT void labTest() {
