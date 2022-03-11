@@ -12,6 +12,6 @@ cmake -B ./build \
 -DCMAKE_SYSTEM_NAME=Android \
 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=./lib/
 
-cmake --build ./build --config ${{env.BUILD_TYPE}}
+cmake --build ./build --config Release
 
 mv ./lib/libLabSoundBridge.so libLabSoundBridge_android_${1}.so
