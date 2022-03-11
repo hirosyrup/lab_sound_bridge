@@ -10,6 +10,6 @@ security unlock-keychain -p abc123 build.keychain
 security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
 security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k abc123 build.keychain
 codesignIdentity=`security find-identity -p codesigning -v | grep -Eo "[0-9A-F]{40}" | head -n 1`
-/usr/bin/codesign --force -s $codesignIdentity ./build/lib/LabSoundBridge.framework -v
+/usr/bin/codesign --force -s $codesignIdentity ./build/LabSoundBridge.framework -v
 
-tar -zcvf -r LabSoundBridge_macos_x64.tar.gz ./build/lib/LabSoundBridge.framework
+tar -zcvf -r LabSoundBridge_macos_x64.tar.gz ./build/LabSoundBridge.framework
