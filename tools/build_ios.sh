@@ -8,8 +8,8 @@ cmake -B ./build-simulator -G "Xcode" -DPLATFORM=OS64 -DCMAKE_TOOLCHAIN_FILE=../
 cmake --build ./build-simulator --config Release
 
 mkdir -p ./products
-cp -r ./build/Release-iphoneos/LabSoundBridge.framework ./products
-lipo -create -output ./products/LabSoundBridge.framework/LabSoundBridge ./build/Release-iphoneos/LabSoundBridge.framework/LabSoundBridge ./build-simulator/Release-iphonesimulator/LabSoundBridge.framework/LabSoundBridge
+cp -r ./Release-iphoneos/LabSoundBridge.framework ./products
+lipo -create -output ./products/LabSoundBridge.framework/LabSoundBridge ./Release-iphoneos/LabSoundBridge.framework/LabSoundBridge ./Release-iphonesimulator/LabSoundBridge.framework/LabSoundBridge
 
 echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
 security create-keychain -p abc123 build.keychain
