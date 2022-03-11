@@ -28,7 +28,7 @@ jobs:
             artifact_name: LabSoundBridge_ios.tar.gz
             script: build_ios.sh
           - os: ubuntu-latest
-            artifact_name: liblabsound_linux_x64.so
+            artifact_name: libLabSoundBridge_linux_x64.so
             script: build_linux.sh
           # - os: macos-11
           #   artifact_name: LabSoundBridge_macos_arm64.tar.gz
@@ -37,7 +37,7 @@ jobs:
             artifact_name: LabSoundBridge_macos_x64.tar.gz
             script: build_mac.sh
           - os: windows-latest
-            artifact_name: labsound_windows_x64.dll
+            artifact_name: LabSoundBridge_windows_x64.dll
             script: build_windows.sh
     runs-on: ${{ matrix.os }}
     steps:
