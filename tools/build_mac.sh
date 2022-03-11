@@ -12,4 +12,4 @@ security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k abc123 bui
 codesignIdentity=`security find-identity -p codesigning -v | grep -Eo "[0-9A-F]{40}" | head -n 1`
 /usr/bin/codesign --force -s $codesignIdentity ./build/LabSoundBridge.framework -v
 
-tar -zcvf LabSoundBridge_macos_x64.tar.gz ./build/LabSoundBridge.framework
+tar -zcvf LabSoundBridge_macos_x64.tar.gz -C ./build LabSoundBridge.framework
