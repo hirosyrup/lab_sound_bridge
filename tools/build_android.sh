@@ -14,4 +14,4 @@ cmake -B ./build \
 
 cmake --build ./build --config Release
 
-mv ./lib/libLabSoundBridge.so libLabSoundBridge_android_${1}.so
+mv ./build/lib/libLabSoundBridge.so libLabSoundBridge_android_${1}.so
