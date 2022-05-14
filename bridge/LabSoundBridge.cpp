@@ -45,6 +45,8 @@
 #include "PWMNode.cpp"
 #include "GranulationNode.cpp"
 
+#include "FunctionNode.cpp"
+
 
 using namespace lab;
 
