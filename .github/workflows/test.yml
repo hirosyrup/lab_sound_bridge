@@ -61,11 +61,3 @@ jobs:
       with:
         name: ${{ matrix.artifact_name }}
         path: ${{ matrix.artifact_name }}
-
-    - name: Upload binary
-      uses: svenstaro/upload-release-action@v1-release
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./${{ matrix.artifact_name }}
-        asset_name: ${{ matrix.artifact_name }}
-        tag: ${{ github.ref }}
