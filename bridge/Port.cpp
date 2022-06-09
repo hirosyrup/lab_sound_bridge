@@ -13,6 +13,7 @@ DART_EXPORT intptr_t InitDartApiDL(void* data) {
 Dart_Port decodeAudioSendPort;
 Dart_Port audioSampleOnEndSendPort;
 Dart_Port offlineRenderCompleteSendPort;
+Dart_Port functionNodeSendPort;
 
 DART_EXPORT void registerDecodeAudioSendPort(Dart_Port sendPort) {
     decodeAudioSendPort = sendPort;
@@ -22,6 +23,9 @@ DART_EXPORT void registerAudioSampleOnEndedSendPort(Dart_Port sendPort) {
 }
 DART_EXPORT void registerOfflineRenderCompleteSendPort(Dart_Port sendPort) {
     offlineRenderCompleteSendPort = sendPort;
+}
+DART_EXPORT void registerFunctionNodeSendPort(Dart_Port sendPort) {
+    functionNodeSendPort = sendPort;
 }
 
 
@@ -77,5 +81,31 @@ void sendOfflineRenderComplete(int id, int status) {
     Dart_PostCObject_DL(offlineRenderCompleteSendPort, &dart_object);
 }
 
+void sendFunctionNodeSendPort(int nodeId, int channel, float * values, int bufferSize) {
+   if(!functionNodeSendPort) return;
+
+    Dart_CObject _nodeId;
+    _nodeId.type = Dart_CObject_kInt32;
+    _nodeId.value.as_int64 = nodeId;
+
+    Dart_CObject _channel;
+    _channel.type = Dart_CObject_kInt32;
+    _channel.value.as_int64 = channel;
+
+    Dart_CObject _bufferSize;
+    _bufferSize.type = Dart_CObject_kInt32;
+    _bufferSize.value.as_int64 = bufferSize;
+    
+    Dart_CObject _values;
+    _values.type = Dart_CObject_kInt64;
+    _values.value.as_int64 = reinterpret_cast<intptr_t>(values);
+
+    Dart_CObject* c_request_arr[] = {&_nodeId, &_channel, &_values, &_bufferSize};
+    Dart_CObject dart_object;
+    dart_object.type = Dart_CObject_kArray;
+    dart_object.value.as_array.values = c_request_arr;
+    dart_object.value.as_array.length = 4;
+    Dart_PostCObject_DL(functionNodeSendPort, &dart_object);
+}
 
 #endif
