@@ -70,6 +70,11 @@ DART_EXPORT int audioBusHasCheck(int busId) {
     return 0;
 }
 
+DART_EXPORT int createAudioBus(int numberOfChannels, int length, int allocate) {
+    std::shared_ptr<AudioBus> audioBus = std::make_shared<AudioBus>(numberOfChannels, length, allocate > 0);
+    return keepBus(audioBus);
+}
+
 DART_EXPORT int AudioBus_numberOfChannels(int busId){
     auto bus = getBus(busId);
     return bus ? bus->numberOfChannels() : 0;
@@ -90,9 +95,14 @@ DART_EXPORT void AudioBus_zero(int busId){
     if(bus)bus->zero();
 }
 
-DART_EXPORT void AudioBus_setChannelMemory(int busId, int channelIndex, float * storage, int length){
+DART_EXPORT int AudioBus_setChannelMemory(int busId, int channelIndex, float * storage, int length){
     auto bus = getBus(busId);
-    if(bus)bus->setChannelMemory(channelIndex, storage, length);
+    if(bus){
+        bus->setChannelMemory(channelIndex, storage, length);
+        return 1;
+    } else {
+        return 0;
+    }
 }
 
 DART_EXPORT void AudioBus_resizeSmaller(int busId, int newLength){

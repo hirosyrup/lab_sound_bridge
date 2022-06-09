@@ -3,8 +3,8 @@
 #include "KeepNode.cpp"
 using namespace lab;
 
-DART_EXPORT int createDelayNode(AudioContext* context) {
-    auto node = std::make_shared<DelayNode>(*context);
+DART_EXPORT int createDelayNode(AudioContext* context, double maxDelayTime) {
+    auto node = std::make_shared<DelayNode>(*context, maxDelayTime);
     return keepNode(node);
 }
 
