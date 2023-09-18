@@ -2,3 +2,6 @@
 	path = LabSound
 	url = https://github.com/LabSound/LabSound.git
 	branch = main
+[submodule "soundtouch"]
+	path = soundtouch
+	url = https://codeberg.org/soundtouch/soundtouch.git
