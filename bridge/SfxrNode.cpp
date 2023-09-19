@@ -98,9 +98,9 @@ DART_EXPORT int SfxrNode_lpFilterCutoffSweep(int nodeId) {
     auto node = std::static_pointer_cast<SfxrNode>(getNode(nodeId));
     return node ? keepAudioParam(nodeId, 19, node->lpFilterCutoffSweep()) : -1;
 }
-DART_EXPORT int SfxrNode_lpFiterResonance(int nodeId) {
+DART_EXPORT int SfxrNode_lpFilterResonance(int nodeId) {
     auto node = std::static_pointer_cast<SfxrNode>(getNode(nodeId));
-    return node ? keepAudioParam(nodeId, 20, node->lpFiterResonance()) : -1;
+    return node ? keepAudioParam(nodeId, 20, node->lpFilterResonance()) : -1;
 }
 DART_EXPORT int SfxrNode_hpFilterCutoff(int nodeId) {
     auto node = std::static_pointer_cast<SfxrNode>(getNode(nodeId));
