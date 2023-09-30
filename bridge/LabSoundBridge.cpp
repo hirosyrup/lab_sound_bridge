@@ -19,6 +19,7 @@
 #include "OscillatorNode.cpp"
 #include "BiquadFilterNode.cpp"
 #include "PannerNode.cpp"
+#include "PitchShiftNode.cpp"
 
 #include "ChannelMergerNode.cpp"
 #include "ChannelSplitterNode.cpp"
